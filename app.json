@@ -1,5 +1,8 @@
 {
   "expo": {
+    "extra": {
+      "supportsRTL": true
+    },
     "name": "StickerSmash",
     "slug": "StickerSmash",
     "version": "1.0.0",
@@ -22,6 +25,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-localization",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/RB-Bold.ttf"]
+        }
+      ]
+    ]
   }
 }

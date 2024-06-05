@@ -1,95 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import * as Location from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/HomeScreen'
+import { I18nManager, Platform, Text , View} from 'react-native';
+import { useEffect, useState } from 'react';
+import i18n from './i18n'; 
+import * as Font from 'expo-font';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import MyBottomNavigation from './components/MyBottomNavigation ';
+const Stack = createStackNavigator();
+const theme = {
+  ...DefaultTheme,
+  fonts: {
+    ...DefaultTheme.fonts,
+    default: {
+      fontFamily: 'RB-Regular',
+    },
+  },
+};
 
 export default function App() {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [address, setAddress] = useState(null);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
+  I18nManager.allowRTL(true);
+  I18nManager.forceRTL(true);
+  i18n.locale = "ar";
+}, []);
+const loadFonts = async () => {
+  await Font.loadAsync({
+    'RB-Bold': require('./assets/fonts/RB-Bold.ttf'),
+    'RB-Regular': require('./assets/fonts/RB-Regular.ttf'),
+  });
+  setFontsLoaded(true);
+};
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+useEffect(() => {
+  loadFonts();
+}, []);
 
-      let address = await Location.reverseGeocodeAsync({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-      console.log(address)
-      setAddress(address[0]);
-    })();
-  }, []);
-
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = `Latitude: ${location.coords.latitude}, Longitude: ${location.coords.longitude}`;
-  }
-
+if (!fontsLoaded) {
+  return <Text>App Loading ...</Text>;
+}
   return (
-    <View style={styles.container}>
-      {location ? (
-        <>
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            showsUserLocation={true}
-          >
-            <Marker
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-              title="You are here"
-            />
-          </MapView>
-          <View style={styles.addressContainer}>
-            <Text style={styles.addressText}>
-              {address
-                ? `${address.formattedAddress}, `
-                : 'Fetching address...'}
-            </Text>
-          </View>
-        </>
-      ) : (
-        <Text>{text}</Text>
-      )}
-    </View>
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={MyBottomNavigation} />
+          </Stack.Navigator>
+          
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  addressContainer: {
-    position: 'absolute',
-    bottom: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    padding: 10,
-    borderRadius: 10,
-  },
-  addressText: {
-    fontSize: 16,
-  },
-});
