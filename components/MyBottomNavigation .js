@@ -1,31 +1,37 @@
-import React, { useState } from 'react';
-import { BottomNavigation, Text } from 'react-native-paper';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import any icons you need
 import HomeScreen from '../screens/HomeScreen';
+import Cart from '../screens/Cart';
 
-const FavoritesRoute = () => <Text>Favorites</Text>;
-const ProfileRoute = () => <Text>Profile</Text>;
+const Tab = createBottomTabNavigator();
 
-const MyBottomNavigation = () => {
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline'},
-    { key: 'favorites', title: 'Favorites', focusedIcon: 'heart' , unfocusedIcon: 'heart-outline'},
-    { key: 'profile', title: 'Profile', focusedIcon: 'account' , unfocusedIcon: 'account-outline'},
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    home: HomeScreen,
-    favorites: FavoritesRoute,
-    profile: ProfileRoute,
-  });
-
+const MyBottomNavigation  = () => {
   return (
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-    />
+    <Tab.Navigator screenOptions={{ headerShown: false}}>
+      <Tab.Screen 
+        name="Home" 
+        component={HomeScreen} 
+        options={{ 
+          tabBarLabel: 'Home', 
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Cart" 
+        component={Cart} 
+        options={{ 
+          tabBarLabel: 'Cart', 
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cart" color={color} size={size} />
+          ),
+        }}
+      />
+      {/* Add other tabs here */}
+    </Tab.Navigator>
   );
 };
 
-export default MyBottomNavigation;
+export default MyBottomNavigation ;

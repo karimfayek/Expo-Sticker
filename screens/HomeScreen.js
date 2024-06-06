@@ -1,5 +1,6 @@
 import { StyleSheet, View, FlatList, Image, ScrollView } from "react-native";
 import { Text, Searchbar, Appbar, Button, Avatar } from 'react-native-paper';
+import { AntDesign } from '@expo/vector-icons';
 import i18n from '../i18n';
 import { useState } from "react";
 import Row from "../components/grid/Row";
@@ -20,26 +21,24 @@ const DATA = [
     },
 ];
 
-const Item = ({ title }) => (
+const Item = ({ title, onPress }) => (
     <View style={styles.item}>
         <Image style={{ width: 100, height: 100 }} source={require('../assets/images/cat.jpg')} />
-        <Text style={styles.text}> {i18n.t('register')}</Text>
+        <Text style={styles.text} onPress={onPress}> {i18n.t('register')}</Text>
     </View>
 );
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
     const [searchQuery, setSearchQuery] = useState('');
+
     return (
         <>
-            <Appbar.Header>
-                <Appbar.BackAction onPress={() => { }} />
-                <Appbar.Content title="Title" />
-                <Appbar.Action icon="calendar" onPress={() => { }} />
-                <Appbar.Action icon="magnify" onPress={() => { }} />
-            </Appbar.Header>
-
             <ScrollView style={styles.container}>
-
+           
+                <Text style={{color:'blue'}}>Delevering to  <AntDesign name="caretdown" size={10} color="black" onPress={() =>{navigation.navigate('Location')}}/> </Text>
+               
+                <Text>Al-Ryad </Text>
+            
                 <Row>
                     <Column size={12}>
                         <Searchbar
@@ -49,7 +48,7 @@ export default function HomeScreen() {
                             style={{ backgroundColor: '#fff' }} />
                         <Text style={{ marginTop: 5, fontWeight: 'bold', fontSize: 25, alignSelf: 'center' }}>{i18n.t('welcome')}</Text>
                     </Column>
-                    
+
                 </Row>
                 <Column size={12}>
                     <Text style={styles.welcome}>{i18n.t('welcomeText')}</Text>
@@ -65,11 +64,46 @@ export default function HomeScreen() {
                         <FlatList
                             data={DATA}
                             horizontal
-                            renderItem={({ item }) => <Item title={item.title} />}
+
+                            showsHorizontalScrollIndicator
+                            renderItem={({ item }) => <Item title={item.title} onPress={() => { navigation.navigate('Cart') }} />}
                             keyExtractor={item => item.id} />
                     </Column>
                 </Row>
+                <Row>
+                    <Column size={12}>
+                        <Text > {i18n.t('whatyouwant')}</Text>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column size={12}>
 
+                        <FlatList
+                            data={DATA}
+                            horizontal
+
+                            showsHorizontalScrollIndicator
+                            renderItem={({ item }) => <Item title={item.title} onPress={() => { navigation.navigate('Cart') }} />}
+                            keyExtractor={item => item.id} />
+                    </Column>
+                </Row>
+                <Row>
+                    <Column size={12}>
+                        <Text > {i18n.t('whatyouwant')}</Text>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column size={12}>
+
+                        <FlatList
+                            data={DATA}
+                            horizontal
+
+                            showsHorizontalScrollIndicator
+                            renderItem={({ item }) => <Item title={item.title} onPress={() => { navigation.navigate('Cart') }} />}
+                            keyExtractor={item => item.id} />
+                    </Column>
+                </Row>
             </ScrollView>
         </>
     )
@@ -98,11 +132,11 @@ const styles = StyleSheet.create(
             borderRightWidth: 7,
         },
         welcome: {
-            marginTop: 5, fontWeight: 'bold', fontSize: 10, alignSelf: 'center' , backgroundColor:'#fff',padding:32, textAlign:'right', borderRadius:7
+            marginTop: 5, fontWeight: 'bold', fontSize: 10, backgroundColor: '#fff', padding: 32, borderRadius: 7
         },
         item: {
             backgroundColor: '#fff',
-            padding: 20,
+            padding: 1,
             marginVertical: 8,
             marginHorizontal: 16,
         },
