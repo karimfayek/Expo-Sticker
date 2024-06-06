@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import any icons you need
 import HomeScreen from '../screens/HomeScreen';
 import Cart from '../screens/Cart';
+import SellerRegistration from './seller/SellerRegistration';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +27,16 @@ const MyBottomNavigation  = () => {
           tabBarLabel: 'Cart', 
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="cart" color={color} size={size} />
+          ),
+        }}
+      />
+       <Tab.Screen 
+        name="Register" 
+        component={SellerRegistration} 
+        options={{ 
+          tabBarLabel: 'Seller Register', 
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="user" size={size} color="black" />
           ),
         }}
       />

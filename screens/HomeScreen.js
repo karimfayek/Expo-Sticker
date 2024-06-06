@@ -114,6 +114,8 @@ const styles = StyleSheet.create(
         container: {
             flex: 1,
             padding: 10,
+            marginTop:20,
+            marginBottom:20,
             backgroundColor: 'rgb(248 249 255)'
         },
         banner: {

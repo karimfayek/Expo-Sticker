@@ -1,4 +1,3 @@
-import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 
 // Import translation files

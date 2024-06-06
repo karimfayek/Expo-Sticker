@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './screens/HomeScreen'
+import { Provider } from 'react-redux';
+import store from './store/store';
 import { I18nManager, Platform, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import i18n from './i18n';
@@ -44,14 +45,17 @@ export default function App() {
     return <Text>App Loading ...</Text>;
   }
   return (
+    <Provider store={store}>
+
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home" screenOptions={ {headerShown: false}}>
           <Stack.Screen name="Home" component={MyBottomNavigation}  />
           <Stack.Screen name="Cart" component={Cart} />
         </Stack.Navigator>
-        <StatusBar style='auto' />
+        <StatusBar style='auto' animated/>
       </NavigationContainer>
     </PaperProvider>
+    </Provider>
   );
 }
