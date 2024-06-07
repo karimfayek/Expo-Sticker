@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, Image, ScrollView } from "react-native";
+import { StyleSheet, View, FlatList, Image, ScrollView, ImageBackground } from "react-native";
 import { Text, Searchbar, Appbar, Button, Avatar } from 'react-native-paper';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../i18n';
@@ -34,11 +34,11 @@ export default function HomeScreen({ navigation }) {
     return (
         <>
             <ScrollView style={styles.container}>
-           
-                <Text style={{color:'blue'}}>Delevering to  <AntDesign name="caretdown" size={10} color="black" onPress={() =>{navigation.navigate('Location')}}/> </Text>
-               
+
+                <Text style={{ color: 'blue' }}>Delevering to  <AntDesign name="caretdown" size={10} color="black" onPress={() => { navigation.navigate('Location') }} /> </Text>
+
                 <Text>Al-Ryad </Text>
-            
+
                 <Row>
                     <Column size={12}>
                         <Searchbar
@@ -59,16 +59,22 @@ export default function HomeScreen({ navigation }) {
                     </Column>
                 </Row>
                 <Row>
-                    <Column size={12}>
-
-                        <FlatList
-                            data={DATA}
-                            horizontal
-
-                            showsHorizontalScrollIndicator
-                            renderItem={({ item }) => <Item title={item.title} onPress={() => { navigation.navigate('Cart') }} />}
-                            keyExtractor={item => item.id} />
+                    <Column size={4}>
+                        <Item title='Category' />
                     </Column>
+                    <Column size={4}>
+                        <Item title='Category' />
+                    </Column>
+                    <Column size={4}>
+                        <Item title='Category' />
+                    </Column>
+                    <Column size={4}>
+                        <Item title='Category' />
+                    </Column>
+                    <Column size={4}>
+                        <Item title='Category' />
+                    </Column>
+
                 </Row>
                 <Row>
                     <Column size={12}>
@@ -83,7 +89,7 @@ export default function HomeScreen({ navigation }) {
                             horizontal
 
                             showsHorizontalScrollIndicator
-                            renderItem={({ item }) => <Item title={item.title} onPress={() => { navigation.navigate('Cart') }} />}
+                            renderItem={({ item }) => <Item title={item.title} onPress={() => { navigation.navigate('Category') }} />}
                             keyExtractor={item => item.id} />
                     </Column>
                 </Row>
@@ -98,10 +104,21 @@ export default function HomeScreen({ navigation }) {
                         <FlatList
                             data={DATA}
                             horizontal
-
                             showsHorizontalScrollIndicator
-                            renderItem={({ item }) => <Item title={item.title} onPress={() => { navigation.navigate('Cart') }} />}
-                            keyExtractor={item => item.id} />
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => <>
+                                <ImageBackground resizeMode="cover" source={require('../assets/images/choise.jpg')} style={{ width: 200, height: 100, margin: 10, justifyContent: 'end' }} onPress={() => { navigation.navigate('Category') }} >
+                                <Text style={{
+                                    color: 'white',
+                                    fontSize: 19,
+                                    lineHeight: 30,
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    backgroundColor: '#000000c0'
+                                }}>Inside</Text>
+                                 </ImageBackground>
+                            </>}
+                        />
                     </Column>
                 </Row>
             </ScrollView>
@@ -114,8 +131,8 @@ const styles = StyleSheet.create(
         container: {
             flex: 1,
             padding: 10,
-            marginTop:20,
-            marginBottom:20,
+            marginTop: 20,
+            marginBottom: 20,
             backgroundColor: 'rgb(248 249 255)'
         },
         banner: {

@@ -10,6 +10,7 @@ import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import MyBottomNavigation from './components/MyBottomNavigation ';
 import Cart from './screens/Cart';
 import { StatusBar } from 'expo-status-bar';
+import Category from './screens/Category';
 const Stack = createStackNavigator();
 const theme = {
   ...DefaultTheme,
@@ -49,9 +50,10 @@ export default function App() {
 
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={ {headerShown: false}}>
+        <Stack.Navigator initialRouteName="Category" screenOptions={ {headerShown: false}}>
           <Stack.Screen name="Home" component={MyBottomNavigation}  />
           <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Category" component={Category} />
         </Stack.Navigator>
         <StatusBar style='auto' animated/>
       </NavigationContainer>
