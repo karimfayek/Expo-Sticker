@@ -1,10 +1,12 @@
 import { StyleSheet, View, Image, FlatList, ScrollView, TouchableOpacity, Modal, Pressable } from "react-native";
 import Row from "../components/grid/Row";
 import Column from "../components/grid/Column";
-import { Text, Appbar, Checkbox ,RadioButton } from "react-native-paper";
+import { Text, Appbar, Checkbox, RadioButton } from "react-native-paper";
 import i18n from '../i18n';
 import { MaterialIcons, Entypo, AntDesign } from '@expo/vector-icons';
 import { useState } from "react";
+import '../localStoragePolyfill';
+import Resturant from "../components/Resturant";
 
 const DATA = [
     {
@@ -40,31 +42,31 @@ const Item = ({ title, onPress }) => (
 
 const FilterModal = ({ visible, onClose, onApply, children }) => {
     return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={visible}
-        onRequestClose={onClose}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.title}>Choose Options</Text>
-              <Pressable onPress={onClose}>
-                <MaterialIcons name="close" color="#000" size={22} />
-              </Pressable>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={visible}
+            onRequestClose={onClose}
+        >
+            <View style={styles.modalOverlay}>
+                <View style={styles.modalContent}>
+                    <View style={styles.modalHeader}>
+                        <Text style={styles.title}>Choose Options</Text>
+                        <Pressable onPress={onClose}>
+                            <MaterialIcons name="close" color="#000" size={22} />
+                        </Pressable>
+                    </View>
+                    <ScrollView>
+                        {children}
+                    </ScrollView>
+                    <Pressable onPress={onApply} style={styles.applyButton}>
+                        <Text style={styles.buttonText}>Apply</Text>
+                    </Pressable>
+                </View>
             </View>
-            <ScrollView>
-              {children}
-            </ScrollView>
-            <Pressable onPress={onApply} style={styles.applyButton}>
-              <Text style={styles.buttonText}>Apply</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+        </Modal>
     );
-  };
+};
 export default function Category() {
     const [modalVisible, setModalVisible] = useState(false);
     const [checked, setChecked] = useState(false);
@@ -105,12 +107,7 @@ export default function Category() {
 
     return (
         <>
-            <Appbar.Header>
-                <Appbar.BackAction onPress={() => { navigation.navigate('Home') }} />
-                <Appbar.Content title="Category" />
-                <Appbar.Action icon="heart" onPress={() => { }} />
-                <Appbar.Action icon="magnify" onPress={() => { }} />
-            </Appbar.Header>
+           
             <ScrollView style={styles.main}>
 
                 <View style={{ height: 50, justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -156,7 +153,7 @@ export default function Category() {
                         status={checkboxes.option3 ? 'checked' : 'unchecked'}
                         onPress={() => handleCheckboxChange('option3')}
                     />
-   <Text>Category</Text>
+                    <Text>Category</Text>
                     <RadioButton.Group onValueChange={value => setRadioValue(value)} value={radioValue}>
                         <RadioButton.Item label="Option 1" value="option1" />
                         <RadioButton.Item label="Option 2" value="option2" />
@@ -164,6 +161,7 @@ export default function Category() {
                     </RadioButton.Group>
                 </FilterModal>
             </ScrollView>
+            <Resturant />
         </>
     )
 }
@@ -208,10 +206,10 @@ const styles = StyleSheet.create(
         buttonText: {
             color: '#fff',
             fontSize: 16,
-            flex:1,
-            backgroundColor:'#000',
-            textAlign:'center',
-            padding:10
-          },
+            flex: 1,
+            backgroundColor: '#000',
+            textAlign: 'center',
+            padding: 10
+        },
     }
 )
