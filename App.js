@@ -2,8 +2,6 @@
 import './localStoragePolyfill';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Provider } from 'react-redux';
-import store from './store/store';
 import { I18nManager, Platform, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import i18n from './i18n';
@@ -13,6 +11,7 @@ import MyBottomNavigation from './components/MyBottomNavigation ';
 import Cart from './screens/Cart';
 import { StatusBar } from 'expo-status-bar';
 import Category from './screens/Category';
+import RestaurantScreen from './screens/RestaurantScreen';
 const Stack = createStackNavigator();
 const theme = {
   ...DefaultTheme,
@@ -48,18 +47,17 @@ export default function App() {
     return <Text>App Loading ...</Text>;
   }
   return (
-    <Provider store={store}>
 
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Category" screenOptions={ {headerShown: false}}>
+        <Stack.Navigator initialRouteName="Resturant" screenOptions={ {headerShown: false}}>
           <Stack.Screen name="Home" component={MyBottomNavigation}  />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="Category" component={Category} />
+          <Stack.Screen name="Resturant" component={RestaurantScreen} />
         </Stack.Navigator>
         <StatusBar style='auto' animated/>
       </NavigationContainer>
     </PaperProvider>
-    </Provider>
   );
 }

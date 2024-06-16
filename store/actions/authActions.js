@@ -6,11 +6,10 @@ import {
   authError,
   logout,
 } from '../reducers/authReducer';
-import setAuthToken from '../utils/setAuthToken';
 
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
+  if (AsyncStorage.token) {
+    setAuthToken(AsyncStorage.token);
   }
 
   try {

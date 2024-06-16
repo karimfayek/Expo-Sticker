@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
-  token: localStorage.getItem('token'),
+  token:  await AsyncStorage.getItem('token'),
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -17,27 +18,27 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
     },
-    registerSuccess: (state, action) => {
-      localStorage.setItem('token', action.payload.token);
+    registerSuccess: async (state, action) => {
+      await AsyncStorage.setItem('token', action.payload.token);
       state.token = action.payload.token;
       state.isAuthenticated = true;
       state.loading = false;
     },
-    loginSuccess: (state, action) => {
-      localStorage.setItem('token', action.payload.token);
+    loginSuccess: async(state, action) => {
+      await AsyncStorage.setItem('token', action.payload.token);
       state.token = action.payload.token;
       state.isAuthenticated = true;
       state.loading = false;
     },
-    authError: (state) => {
-      localStorage.removeItem('token');
+    authError:async (state) => {
+      await AsyncStorage.removeItem('token');
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
       state.user = null;
     },
-    logout: (state) => {
-      localStorage.removeItem('token');
+    logout: async (state) => {
+      await AsyncStorage.removeItem('token');
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;

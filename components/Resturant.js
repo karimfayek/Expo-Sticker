@@ -35,7 +35,7 @@ const DATA = [
 ];
 const Item = ({ title, onPress, image }) => (
     <>
-        <Row style={{ marginVertical: 10 }}>
+        <Row style={{ margin: 10 }}>
             <Column size={5}>
                 <Image style={{ width: 150, height: 100 }} source={image} />
             </Column>
